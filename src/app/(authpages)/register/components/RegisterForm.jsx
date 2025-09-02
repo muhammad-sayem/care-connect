@@ -2,9 +2,56 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const RegisterForm = () => {
   const [activeTab, setActiveTab] = useState("PATIENT");
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    const photourl = form.photourl?.value.trim() || "https://cdn-icons-png.flaticon.com/512/9131/9131529.png";
+
+    const registrationData = { name, email, password, photourl };
+
+    try {
+      if (activeTab === 'PATIENT') {
+        const res = await axios.post('https://appointment-manager-node.onrender.com/api/v1/auth/register/patient', registrationData);
+        Swal.fire({
+          title: "Patient Registered Successfully!!",
+          icon: "success",
+          draggable: true
+        });
+        console.log(res.data);
+      }
+
+      else {
+        const specialization = form.specialization.value;
+        const res = await axios.post('https://appointment-manager-node.onrender.com/api/v1/auth/register/doctor', { ...registrationData, specialization });
+
+        Swal.fire({
+          title: "Doctor Registered Successfully!!",
+          icon: "success",
+          draggable: true
+        });
+        console.log(res.data);
+      }
+    }
+
+    catch (error) {
+      console.log(error);
+      Swal.fire({
+        title: "Something went Wrong",
+        icon: "error",
+        draggable: true
+      });
+    }
+  }
 
   const specializations = [
     "Cardiology",
@@ -30,8 +77,8 @@ const RegisterForm = () => {
           <button
             type="button"
             className={`flex-1 py-2 text-center font-medium ${activeTab === "PATIENT"
-                ? "border-b-2 border-blue-600 text-blue-600"
-                : "text-gray-500"
+              ? "border-b-2 border-blue-600 text-blue-600"
+              : "text-gray-500"
               }`}
             onClick={() => setActiveTab("PATIENT")}
           >
@@ -40,8 +87,8 @@ const RegisterForm = () => {
           <button
             type="button"
             className={`flex-1 py-2 text-center font-medium ${activeTab === "DOCTOR"
-                ? "border-b-2 border-blue-600 text-blue-600"
-                : "text-gray-500"
+              ? "border-b-2 border-blue-600 text-blue-600"
+              : "text-gray-500"
               }`}
             onClick={() => setActiveTab("DOCTOR")}
           >
@@ -49,11 +96,12 @@ const RegisterForm = () => {
           </button>
         </div>
 
-        <form className="space-y-4">
+        <form onSubmit={handleRegister} className="space-y-4">
 
           <div>
             <label className="block text-gray-600 mb-1">Name</label>
             <input
+              name="name"
               type="text"
               placeholder="Your full name"
               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
@@ -63,6 +111,7 @@ const RegisterForm = () => {
           <div>
             <label className="block text-gray-600 mb-1">Email</label>
             <input
+              name="email"
               type="email"
               placeholder="you@example.com"
               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
@@ -73,6 +122,7 @@ const RegisterForm = () => {
           <div>
             <label className="block text-gray-600 mb-1">Password</label>
             <input
+              name="password"
               type="password"
               placeholder="Enter your password"
               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
@@ -84,6 +134,7 @@ const RegisterForm = () => {
             <div>
               <label className="block text-gray-600 mb-1">Photo URL (optional)</label>
               <input
+                name="photourl"
                 type="text"
                 placeholder="https://example.com/photo.jpg"
                 className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
@@ -97,6 +148,7 @@ const RegisterForm = () => {
               <div>
                 <label className="block text-gray-600 mb-1">Specialization</label>
                 <select
+                name="specialization"
                   className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="">Select Specialization</option>
@@ -119,7 +171,7 @@ const RegisterForm = () => {
           )}
 
 
-          <Button className="w-full py-2 mt-2 border border-black font-bold bg-gradient-to-r from-secondary to-primary" variant="default">
+          <Button className="w-full py-2 mt-2 border border-black font-bold bg-gradient-to-r from-secondary to-primary hover:cursor-pointer" variant="default">
             Register
           </Button>
         </form>
