@@ -7,12 +7,12 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 const DoctorCard = ({ doctor }) => {
   return (
     <Card className="w-full max-w-sm rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
       <CardHeader className="flex flex-col items-center p-4">
-
         <img
           src={doctor.photourl || "https://cdn-icons-png.flaticon.com/512/9131/9131529.png"}
           alt={doctor.name}
@@ -20,7 +20,7 @@ const DoctorCard = ({ doctor }) => {
         />
 
         <CardTitle className="text-lg font-semibold text-gray-800 text-center">
-          {doctor.name}
+          Dr. {doctor.name}
         </CardTitle>
 
         <CardDescription className="text-sm text-gray-500 text-center mt-1">
@@ -28,10 +28,8 @@ const DoctorCard = ({ doctor }) => {
         </CardDescription>
       </CardHeader>
 
-      <CardContent className="px-4 pb-4">
-        <p className="text-gray-600 text-sm text-center">
-          Available for appointments. Click to view profile.
-        </p>
+      <CardContent className="px-4 pb-4 mx-auto">
+          <Button variant='outline'> Book Appoinment </Button>
       </CardContent>
     </Card>
   );
