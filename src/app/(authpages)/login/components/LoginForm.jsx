@@ -50,7 +50,7 @@ const LoginForm = () => {
           </select>
         </div>
 
-        <Button className="w-full py-2 border border-black font-bold" variant="default">
+        <Button className="w-full py-2 border border-black font-bold bg-gradient-to-r from-secondary to-primary" variant="default">
           Login
         </Button>
 

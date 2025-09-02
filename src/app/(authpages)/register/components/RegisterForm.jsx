@@ -56,7 +56,7 @@ const RegisterForm = () => {
             <input
               type="text"
               placeholder="Your full name"
-              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
 
@@ -65,7 +65,7 @@ const RegisterForm = () => {
             <input
               type="email"
               placeholder="you@example.com"
-              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
 
@@ -75,7 +75,7 @@ const RegisterForm = () => {
             <input
               type="password"
               placeholder="Enter your password"
-              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
 
@@ -86,7 +86,7 @@ const RegisterForm = () => {
               <input
                 type="text"
                 placeholder="https://example.com/photo.jpg"
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
           )}
@@ -97,7 +97,7 @@ const RegisterForm = () => {
               <div>
                 <label className="block text-gray-600 mb-1">Specialization</label>
                 <select
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="">Select Specialization</option>
                   {specializations.map((spec) => (
@@ -112,14 +112,14 @@ const RegisterForm = () => {
                 <input
                   type="text"
                   placeholder="https://example.com/photo.jpg"
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
                 />
               </div>
             </>
           )}
 
 
-          <Button className="w-full py-2 mt-2 border border-black font-bold" variant="default">
+          <Button className="w-full py-2 mt-2 border border-black font-bold bg-gradient-to-r from-secondary to-primary" variant="default">
             Register
           </Button>
         </form>
