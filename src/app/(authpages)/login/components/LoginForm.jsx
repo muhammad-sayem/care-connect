@@ -1,0 +1,68 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+
+const LoginForm = () => {
+  const [role, setRole] = useState("PATIENT");
+
+  return (
+    <div className="flex justify-center items-center min-h-screen bg-gray-50 px-4">
+      <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Login to Care Connect</h2>
+
+        <div className="mb-4">
+          <label htmlFor="email" className="block text-gray-600 mb-1">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            placeholder="you@example.com"
+            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="password" className="block text-gray-600 mb-1">
+            Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Enter your password"
+            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+
+        <div className="mb-6">
+          <label htmlFor="role" className="block text-gray-600 mb-1">
+            Login as
+          </label>
+          <select
+            id="role"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          >
+            <option value="PATIENT">Patient</option>
+            <option value="DOCTOR">Doctor</option>
+          </select>
+        </div>
+
+        <Button className="w-full py-2 border border-black font-bold" variant="default">
+          Login
+        </Button>
+
+        <p className="text-center text-gray-500 mt-4 text-sm">
+          Don't have an account?{" "}
+          <a href="/register" className="text-blue-600 hover:underline">
+            Register
+          </a>
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default LoginForm;
