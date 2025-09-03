@@ -13,7 +13,7 @@ const AllDoctors = () => {
   const [page, setPage] = useState(1);
   const limit = 12;
 
-  const { data: allDoctors, isLoading, isError, isFetching } = useQuery({
+  const { data: allDoctors, isLoading, isError } = useQuery({
     queryKey: ["all-doctors", search, page, specialization],
     queryFn: async () => {
       const res = await axios.get(
@@ -61,21 +61,19 @@ const AllDoctors = () => {
           className="w-full max-w-xs border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
         >
           <option value="">All Specializations</option>
-          {specializations && specializations?.map((spec, idx) => (
-            <option key={idx} value={spec}>{spec}</option>
-          ))}
+          {
+            specializations && specializations?.map((spec, idx) => (
+              <option key={idx} value={spec}>{spec}</option>
+            ))
+          }
         </select>
 
         <Button onClick={() => setSearch("")} variant='outline'> Show All </Button>
       </div>
 
-      {
-        isLoading && <p> Loading doctors... </p>
-      }
+      {isLoading && <p> Loading doctors... </p>}
 
-      {
-        isError && <p> Failed to load doctors list </p>
-      }
+      {isError && <p> Failed to load doctors list </p>}
 
       {
         allDoctors && allDoctors.length > 0 ? (
