@@ -34,6 +34,13 @@ const LoginForm = () => {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("role", role);
 
+      localStorage.setItem("user", 
+        JSON.stringify({
+          email: res.data.email,
+          role: role
+        })
+      )
+
       Swal.fire({
         title: `Successfully logged in as ${role}`,
         icon: "success",

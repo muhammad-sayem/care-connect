@@ -23,11 +23,11 @@ const AllDoctors = () => {
 
   return (
     <div className="w-10/12 mx-auto">
-      <h2> All Doctors </h2>
+      <h2 className="text-4xl font-bold text-center text-primary my-6"> All Available Doctors </h2>
 
       {
         allDoctors && allDoctors.length > 0 ?
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-24">
             {
               allDoctors?.map(doctor => {
                 return (

@@ -7,11 +7,12 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+
+import AppoinmentModal from "../appoinment-modal/AppoinmentModal";
 
 const DoctorCard = ({ doctor }) => {
   return (
-    <Card className="w-full max-w-sm rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
+    <Card className="w-full max-w-sm rounded-xl shadow-md hover:shadow-lg transition-transform duration-500 hover:scale-105">
       <CardHeader className="flex flex-col items-center p-4">
         <img
           src={doctor.photourl || "https://cdn-icons-png.flaticon.com/512/9131/9131529.png"}
@@ -29,8 +30,9 @@ const DoctorCard = ({ doctor }) => {
       </CardHeader>
 
       <CardContent className="px-4 pb-4 mx-auto">
-          <Button variant='outline'> Book Appoinment </Button>
+        <AppoinmentModal doctor={doctor} />
       </CardContent>
+
     </Card>
   );
 };
