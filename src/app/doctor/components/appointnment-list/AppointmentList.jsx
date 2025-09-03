@@ -6,6 +6,7 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import LoadingSpinner from "../../../../components/LoadingSpinner";
 import LogoutButton from "../../../../components/LogoutButton";
+import { Button } from "@/components/ui/button";
 
 export default function AppointmentList() {
   const [page, setPage] = useState(1);
@@ -84,7 +85,7 @@ export default function AppointmentList() {
                 </div>
 
                 <div className="flex gap-2">
-                  <button
+                  <Button
                     onClick={() => handleUpdateStatus(appt.id, "CONFIRMED")}
                     className={`px-3 py-1 rounded text-white ${isCompleteDisabled
                       ? "bg-gray-700 cursor-not-allowed"
@@ -93,7 +94,7 @@ export default function AppointmentList() {
                     disabled={isCompleteDisabled}
                   >
                     Confirm
-                  </button>
+                  </Button>
 
                   <button
                     onClick={() => handleUpdateStatus(appt.id, "CANCELLED")}
@@ -116,21 +117,23 @@ export default function AppointmentList() {
 
       {data && data.length > 0 && (
         <div className="flex justify-center items-center gap-x-6 my-6">
-          <button
+          <Button
+          variant='default'
             onClick={() => setPage((p) => Math.max(p - 1, 1))}
             className="px-4 py-2 bg-gray-200 rounded"
             disabled={page === 1}
           >
             Previous
-          </button>
+          </Button>
           <span className="font-bold text-xl">{page}</span>
-          <button
+          <Button
+          variant='default'
             onClick={() => setPage((p) => p + 1)}
             className="px-4 py-2 bg-gray-200 rounded"
             disabled={data.length < limit}
           >
             Next
-          </button>
+          </Button>
         </div>
       )}
     </div>
