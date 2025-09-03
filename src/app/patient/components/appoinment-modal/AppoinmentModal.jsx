@@ -24,6 +24,21 @@ const AppointmentModal = ({ doctor }) => {
     if (!date) {
       return;
     }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const selectedDate = new Date(date);
+
+    if(selectedDate < today){
+      Swal.fire({
+        title: "You can't add those dates which is already passed!!",
+        icon: "error",
+        draggable: true,
+      });
+      return;
+    }
+
     const user = typeof window !== "undefined" ? JSON.parse(localStorage.getItem("user")) : null;
 
     if (!user?.email) {
@@ -38,10 +53,15 @@ const AppointmentModal = ({ doctor }) => {
     try {
       setLoading(true);
 
-      const res = await axios.post("https://appointment-manager-node.onrender.com/api/v1/appoinments", {
+      const token = localStorage.getItem("token")
+
+      const res = await axios.post("https://appointment-manager-node.onrender.com/api/v1/appointments", {
         doctorId: doctor.id,
-        patientEmail: user?.email,
         date: date
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       });
       console.log("Appoinment booked", res.data);
       Swal.fire({

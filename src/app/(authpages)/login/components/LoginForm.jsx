@@ -31,15 +31,11 @@ const LoginForm = () => {
     try {
       const res = await axios.post("https://appointment-manager-node.onrender.com/api/v1/auth/login", loginData);
 
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("role", role);
+      const {user, token} = res.data.data;
+      console.log("TOKEN", token);
 
-      localStorage.setItem("user", 
-        JSON.stringify({
-          email: res.data.email,
-          role: role
-        })
-      )
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
 
       Swal.fire({
         title: `Successfully logged in as ${role}`,
