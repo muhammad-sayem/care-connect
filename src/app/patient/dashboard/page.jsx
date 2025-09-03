@@ -10,7 +10,6 @@ const PatientDashboard = () => {
         <AllDoctors />
         <MyAppointments />
       </ClientWrapper>
-      <LogoutButton />
     </div>
   );
 };

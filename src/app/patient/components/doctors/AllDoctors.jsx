@@ -6,6 +6,8 @@ import DoctorCard from "./DoctorCard";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { FaArrowCircleRight, FaArrowCircleLeft } from "react-icons/fa";
+import LoadingSpinner from "../../../../components/LoadingSpinner";
+import LogoutButton from "../../../../components/LogoutButton";
 
 const AllDoctors = () => {
   const [search, setSearch] = useState("");
@@ -32,7 +34,7 @@ const AllDoctors = () => {
     keepPreviousData: true,
   });
 
-  const { data: specializations } = useQuery({
+  const { data: specializations, refetch } = useQuery({
     queryKey: ['specializations'],
     queryFn: async () => {
       const res = await axios.get("https://appointment-manager-node.onrender.com/api/v1/specializations");
@@ -42,9 +44,18 @@ const AllDoctors = () => {
 
   return (
     <div className="w-10/12 mx-auto">
-      <h2 className="text-4xl font-bold text-center text-primary my-6">
-        All Available Doctors
-      </h2>
+      <div className="flex justify-between items-center">
+        <div>
+
+        </div>
+        <h2 className="text-4xl font-bold text-center text-primary my-6">
+          All Available Doctors
+        </h2>
+
+        <div>
+          <LogoutButton />
+        </div>
+      </div>
 
       <div className="flex justify-center mb-8 gap-x-2 items-center">
         <input
@@ -71,7 +82,7 @@ const AllDoctors = () => {
         <Button onClick={() => setSearch("")} variant='outline'> Show All </Button>
       </div>
 
-      {isLoading && <p> Loading doctors... </p>}
+      {isLoading && <p> <LoadingSpinner /> </p>}
 
       {isError && <p> Failed to load doctors list </p>}
 
@@ -83,6 +94,7 @@ const AllDoctors = () => {
                 <DoctorCard
                   key={doctor.id}
                   doctor={doctor}
+                  refetch={refetch}
                 />
               ))}
             </div>

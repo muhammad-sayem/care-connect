@@ -1,12 +1,13 @@
+import ClientWrapper from "../../../components/ClinetWrapper";
 import LogoutButton from "../../../components/LogoutButton";
+import AppointmentList from "../components/appointnment-list/AppointmentList";
 
 const DoctorDashboard = () => {
   return (
     <div>
-      Doctor Dashboard
-
-      <LogoutButton />
-
+      <ClientWrapper>
+        <AppointmentList />
+      </ClientWrapper>
     </div>
   );
 };

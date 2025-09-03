@@ -5,23 +5,24 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { Button } from "@/components/ui/button";
+import LoadingSpinner from "../../../../components/LoadingSpinner";
 
-const MyAppointments = () => {
+export default function MyAppointments() {
   const [page, setPage] = useState(1);
-  const limit = 10;
+  const [statusFilter, setStatusFilter] = useState("");
   const [userEmail, setUserEmail] = useState("");
-  const [statusFilter, setStatusFilter] = useState(""); 
+  const limit = 10;
 
+  // Get user email from localStorage
   useEffect(() => {
     const user = typeof window !== "undefined" ? JSON.parse(localStorage.getItem("user")) : null;
     if (user?.email) setUserEmail(user.email);
   }, []);
 
+  // Fetch appointments
   const fetchAppointments = async () => {
-    if (!userEmail){
-      return [];
-    };
-    
+    if (!userEmail) return [];
+
     const res = await axios.get(
       "https://appointment-manager-node.onrender.com/api/v1/appointments/patient",
       {
@@ -29,6 +30,7 @@ const MyAppointments = () => {
         headers: { Authorization: `Bearer ${localStorage.getItem("token") || ""}` },
       }
     );
+
     return res.data.data;
   };
 
@@ -38,6 +40,7 @@ const MyAppointments = () => {
     enabled: !!userEmail,
   });
 
+  // Cancel appointment
   const handleCancel = async (id) => {
     const result = await Swal.fire({
       title: 'Are you sure?',
@@ -47,18 +50,18 @@ const MyAppointments = () => {
       confirmButtonText: 'Yes, cancel it!',
     });
 
-    if (result.isConfirmed) {
-      try {
-        await axios.patch(
-          "https://appointment-manager-node.onrender.com/api/v1/appointments/update-status",
-          { status: "CANCELLED", appointment_id: id },
-          { headers: { Authorization: `Bearer ${localStorage.getItem("token") || ""}` } }
-        );
-        Swal.fire('Cancelled!', 'Your appointment has been cancelled.', 'success');
-        refetch();
-      } catch (err) {
-        Swal.fire('Error', 'Failed to cancel appointment', 'error');
-      }
+    if (!result.isConfirmed) return;
+
+    try {
+      await axios.patch(
+        "https://appointment-manager-node.onrender.com/api/v1/appointments/update-status",
+        { appointment_id: id, status: "CANCELLED" },
+        { headers: { Authorization: `Bearer ${localStorage.getItem("token") || ""}` } }
+      );
+      Swal.fire('Cancelled!', 'Your appointment has been cancelled.', 'success');
+      refetch();
+    } catch {
+      Swal.fire('Error', 'Failed to cancel appointment', 'error');
     }
   };
 
@@ -66,7 +69,7 @@ const MyAppointments = () => {
     <div className="w-10/12 mx-auto">
       <h2 className="text-3xl font-bold text-center my-6">My Appointments</h2>
 
-      {/* Filter dropdown */}
+      {/* Status Filter */}
       <div className="flex justify-center mb-6">
         <select
           value={statusFilter}
@@ -75,12 +78,12 @@ const MyAppointments = () => {
         >
           <option value="">All Status</option>
           <option value="PENDING">Pending</option>
-          <option value="COMPLETED">Completed</option>
+          <option value="CONFIRMED">Confirmed</option>
           <option value="CANCELLED">Cancelled</option>
         </select>
       </div>
 
-      {isLoading && <p className="text-center">Loading appointments...</p>}
+      {isLoading && <p className="text-center"><LoadingSpinner /></p>}
       {isError && <p className="text-center">Failed to load appointments</p>}
 
       {appointments && appointments.length > 0 ? (
@@ -102,6 +105,7 @@ const MyAppointments = () => {
         <p className="text-center">No appointments found</p>
       )}
 
+      {/* Pagination */}
       {appointments && appointments.length > 0 && (
         <div className="flex justify-center items-center gap-x-6 mb-8">
           <Button onClick={() => setPage(page - 1)} disabled={page === 1}>Previous</Button>
@@ -111,6 +115,4 @@ const MyAppointments = () => {
       )}
     </div>
   );
-};
-
-export default MyAppointments;
+}

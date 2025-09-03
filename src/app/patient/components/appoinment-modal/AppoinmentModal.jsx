@@ -15,7 +15,7 @@ import { Label } from "@/components/ui/label";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-const AppointmentModal = ({ doctor }) => {
+const AppointmentModal = ({ doctor, refetch }) => {
   const [date, setDate] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -70,6 +70,7 @@ const AppointmentModal = ({ doctor }) => {
         draggable: true
       });
       setDate("");
+      refetch();
     }
 
     catch (error) {

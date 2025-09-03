@@ -15,7 +15,6 @@ const LogoutButton = () => {
   return (
     <div className="w-10/12 mx-auto mt-10">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-3xl font-bold">Doctor Dashboard</h2>
         <Button variant="outline" onClick={handleLogout}>Logout</Button>
       </div>
     </div>

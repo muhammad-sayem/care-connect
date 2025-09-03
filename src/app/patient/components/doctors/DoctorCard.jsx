@@ -10,7 +10,7 @@ import {
 
 import AppoinmentModal from "../appoinment-modal/AppoinmentModal";
 
-const DoctorCard = ({ doctor }) => {
+const DoctorCard = ({ doctor, refetch }) => {
   return (
     <Card className="w-full max-w-sm rounded-xl shadow-md hover:shadow-lg transition-transform duration-500 hover:scale-105">
       <CardHeader className="flex flex-col items-center p-4">
@@ -30,7 +30,10 @@ const DoctorCard = ({ doctor }) => {
       </CardHeader>
 
       <CardContent className="px-4 pb-4 mx-auto">
-        <AppoinmentModal doctor={doctor} />
+        <AppoinmentModal
+          doctor={doctor}
+          refetch={refetch}
+        />
       </CardContent>
 
     </Card>
